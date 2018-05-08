@@ -1,5 +1,6 @@
 package com.example.school.controller;
 
+import com.example.school.dto.LendedBook;
 import com.example.school.model.Book;
 import com.example.school.model.User;
 import com.example.school.model.UserXBook;
@@ -34,12 +35,23 @@ public class LibController {
         return "bookSystem";
     }
 
+    @GetMapping("/myBook")
+    public String getMybook(){
+        return "mybook";
+    }
 
     @PostMapping("/lend")
     @ResponseBody
     public String postLend(@RequestParam Map<String, String> map, Principal principal){
         Book book = bookService.findByName(map.get("name"));
         User user = userService.findByUsername(principal.getName());
+
+        List<UserXBook> list = userXBookService.findByUser(user);
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getBook().getId() == book.getId()){
+                return "不能借同一本";
+            }
+        }
 
         book.setNum(book.getNum() - 1);
         UserXBook userXBook = new UserXBook();
@@ -50,36 +62,34 @@ public class LibController {
         bookService.save(book);
         userXBookService.save(userXBook);
 
-        return "succ";
+        return "success";
     }
 
     @GetMapping("/lend")
     @ResponseBody
-    public List getLend(Principal principal){//这个没写完
-
-//        List list = userXBookService.findAll().
-//                stream().
-//                filter(x -> x.getUser().getUsername() == principal.getName()).
-//                collect(Collectors.toList());
-
-
+    public List<LendedBook> getLend(Principal principal){
         User user = userService.findByUsername(principal.getName());
         List<UserXBook> list = userXBookService.findAll();
-        List<UserXBook> list1 = null;
 
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getUser().getUsername() == user.getUsername()){
-                list1.add(list.get(i));
+        List<LendedBook> list1 = new ArrayList<>();
+        for (UserXBook aList : list) {
+            if (aList.getUser().getUsername() == user.getUsername()) {
+                LendedBook lendedBook = new LendedBook(aList.getBook().getName(), aList.getLendedDate());
+                list1.add(lendedBook);
             }
         }
-        System.out.println(list1);
 
         return list1;
     }
 
-    @GetMapping("/myBook")
-    public String getMybook(){
-        return "mybook";
+    @DeleteMapping("/lend/{name}")
+    @ResponseBody
+    public void ReturnBook(@PathVariable String name){
+        Book book = bookService.findByName(name);
+        book.setNum(book.getNum() + 1);
+        userXBookService.deleteUserXBookByBook(book);
+        bookService.save(book);
     }
+
 
 }

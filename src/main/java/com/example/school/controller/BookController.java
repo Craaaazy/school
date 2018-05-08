@@ -35,11 +35,10 @@ public class BookController {
             Book book = new Book();
             book.setName(map.get("name"));
             book.setNum(num);
+            book.setAuthor(map.get("author"));
             return bookService.save(book);
         }
     }
 
 
-
-    // @GetMapping("/{}") 这里是通过name还是id别的暂时不确定
 }

@@ -12,6 +12,8 @@ public class Book {
     @GenericGenerator(name="system-uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
+    private String author;
+
     private String name;
     private int num;
 
@@ -37,5 +39,13 @@ public class Book {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -25,6 +25,9 @@ $(document).ready(function () {
                 data:'num',
             },{
                 targets:3,
+                data:'author',
+            },{
+                targets:4,
                 searching:false,
                 ordering:false,
                 render: function (data, type, row, meta) {
@@ -41,6 +44,7 @@ $(document).ready(function () {
         var data = new Object();
         data.name = $('#book_name').val();
         data.num = $('#book_num').val();
+        data.author = $('#book_author').val();
 
         $.ajax({
             url:'/book',
@@ -72,7 +76,7 @@ function lend(_this) {
         data:data,
 
         success:function(data){
-            alert("success");
+            alert(data);
             window.location.reload();
         },
 
