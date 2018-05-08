@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 @Controller
-public class MainController {
+public class RegisController {
 
     @Autowired
     RoleService roleService;
@@ -67,7 +67,7 @@ public class MainController {
         message.setTo(map.get("email"));
         message.setSubject("完成邮箱验证");
         String content = "点击下面链接激活账号:" +
-                "http://localhost:8077/validatePage/validCode=" + validCode;
+                "http://localhost:8077/validatePage/" + validCode;
 
         message.setText(content);
 
@@ -80,7 +80,11 @@ public class MainController {
 
     @GetMapping(value = "/validatePage/{validCode}")
     public String valid(@PathVariable String validCode){
-        User user = userService.findByEmail(validCode);
+        System.out.println(validCode);
+
+        User user = userService.findByVaridateCode(validCode);
+        System.out.println(user);
+
         user.setActive(true);
         userService.save(user);
 

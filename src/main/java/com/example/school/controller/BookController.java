@@ -3,6 +3,8 @@ package com.example.school.controller;
 
 import com.example.school.model.Book;
 import com.example.school.service.BookService;
+import com.example.school.service.RoleService;
+import com.example.school.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +17,11 @@ public class BookController {
 
     @Autowired
     BookService bookService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/book")
-    public List<Book> getBook(){
-        return bookService.findAll();
-    }
+    public List<Book> getBook() {return bookService.findAll();}
 
     @PostMapping("/book")
     public Book postBook(@RequestBody Map<String, String> map){
@@ -36,6 +38,8 @@ public class BookController {
             return bookService.save(book);
         }
     }
+
+
 
     // @GetMapping("/{}") 这里是通过name还是id别的暂时不确定
 }

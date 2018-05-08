@@ -41,10 +41,13 @@ public class LibController {
         Book book = bookService.findByName(map.get("name"));
         User user = userService.findByUsername(principal.getName());
 
+        book.setNum(book.getNum() - 1);
         UserXBook userXBook = new UserXBook();
         userXBook.setBook(book);
         userXBook.setUser(user);
         userXBook.setLendedDate(new Date(System.currentTimeMillis()));
+
+        bookService.save(book);
         userXBookService.save(userXBook);
 
         return "succ";
@@ -52,23 +55,31 @@ public class LibController {
 
     @GetMapping("/lend")
     @ResponseBody
-    public List getLend(Principal principal){
+    public List getLend(Principal principal){//这个没写完
 
-        List list = userXBookService.findAll().
-                stream().
-                filter(x -> x.getUser().getUsername() == principal.getName()).
-                collect(Collectors.toList());
+//        List list = userXBookService.findAll().
+//                stream().
+//                filter(x -> x.getUser().getUsername() == principal.getName()).
+//                collect(Collectors.toList());
 
-//        List<UserXBook> list2 = userXBookService.findAll();
-//        List<String> list = new ArrayList<>();
-//        for (int i = 0; i < list2.size(); i++) {
-//            if (list2.get(i).getUser().getId() == user.getId()) {
-//                String name = list2.get(i).getBook().getName();
-//                list.add(name);
-//            }
-//        }
 
-        return list;
+        User user = userService.findByUsername(principal.getName());
+        List<UserXBook> list = userXBookService.findAll();
+        List<UserXBook> list1 = null;
+
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getUser().getUsername() == user.getUsername()){
+                list1.add(list.get(i));
+            }
+        }
+        System.out.println(list1);
+
+        return list1;
+    }
+
+    @GetMapping("/myBook")
+    public String getMybook(){
+        return "mybook";
     }
 
 }

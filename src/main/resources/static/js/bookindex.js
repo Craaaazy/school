@@ -2,8 +2,6 @@ $(document).ready(function () {
 
     $('#myTable').dataTable({
 
-        style: 'display',
-
         ajax: {
             url: '/book',
             type: 'GET',
@@ -75,6 +73,7 @@ function lend(_this) {
 
         success:function(data){
             alert("success");
+            window.location.reload();
         },
 
     });

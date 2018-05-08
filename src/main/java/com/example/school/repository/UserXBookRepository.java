@@ -9,6 +9,4 @@ import java.util.List;
 public interface UserXBookRepository extends JpaRepository<UserXBook, String>{
     UserXBook save(UserXBook userXBook);
     UserXBook findByUser(User user);
-    List<UserXBook> findAll();
-
 }

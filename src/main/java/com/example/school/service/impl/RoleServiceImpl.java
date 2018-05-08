@@ -6,6 +6,8 @@ import com.example.school.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -16,4 +18,5 @@ public class RoleServiceImpl implements RoleService {
     public Role findByName(String name) {
         return roleRepositroy.findByName(name);
     }
+
 }

@@ -31,7 +31,9 @@
 <body>
 
 <center>
-    <a href="/myBook">My Book</a>
+    <form method="get" th:action="@{/lib/myBook}">
+        <button type="submit" class="btn btn-primary">myBook</button>
+    </form>
 
     <div class="container">
         <table id="myTable" class="display">

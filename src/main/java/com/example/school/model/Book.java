@@ -15,9 +15,6 @@ public class Book {
     private String name;
     private int num;
 
-    @OneToMany(mappedBy = "book")
-    private List<UserXBook> userXBook;
-
     public String getId() {
         return id;
     }
@@ -32,14 +29,6 @@ public class Book {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<UserXBook> getUserXBook() {
-        return userXBook;
-    }
-
-    public void setUserXBook(List<UserXBook> userXBook) {
-        this.userXBook = userXBook;
     }
 
     public int getNum() {
