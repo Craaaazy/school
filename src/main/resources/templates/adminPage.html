@@ -3,7 +3,7 @@
       lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>index</title>
+    <title>admin index</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"/>
@@ -17,19 +17,37 @@
             integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
             crossorigin="anonymous"></script>
 
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/bookmanage.js}"></script>
+
 </head>
 <body>
-<form th:action="@{/logout}">
-    <button type="submit" class="btn btn-danger">logout</button>
-</form>
 
-<from method="get" th:action="@{/lib/index}">
-    <button type="submit" class="btn btn-primary">to book index.</button>
-</from>
+<center>
 
-<from method="get" th:action="@{/admin}">
-    <button type="submit" class="btn btn-primary">to admin page.</button>
-</from>
+    <div class="container">
+        <table id="admintable" class="display">
+            <thead>
+            <tr>
+                <th style="width: 20px">selected</th>
+                <th>UserName</th>
+                <th>BookName</th>
+                <th>BorrowedDate</th>
+                <th>options</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+</center>
 
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.example.school.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,8 @@ public class Book {
     private String author;
 
     private String name;
+
+    @Min(0)
     private int num;
 
     public String getId() {

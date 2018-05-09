@@ -47,6 +47,7 @@ public class LibController {
         User user = userService.findByUsername(principal.getName());
 
         List<UserXBook> list = userXBookService.findByUser(user);
+
         for (int i = 0; i < list.size(); i++) {
             if(list.get(i).getBook().getId() == book.getId()){
                 return "不能借同一本";
