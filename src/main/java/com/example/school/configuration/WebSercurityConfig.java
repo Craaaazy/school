@@ -41,16 +41,19 @@ public class WebSercurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable();
-        http.authorizeRequests()
-                .antMatchers("/regist","/unvalidate","/validatePage/*","/validatePage","validateSuccess").permitAll()
-                .anyRequest().authenticated()
+        http
+                .authorizeRequests()
+                    .antMatchers("/admin/**").hasRole("ADMIN")//这个role 必须大写数据库role里面要写ROLE_ADMIN
+                    .antMatchers("/regist","/unvalidate","/validatePage/*","/validatePage","/validateSuccess").permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")//默认login
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/login")//默认login
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                    .logout()
+                    .permitAll();
+
     }
 
     @Override

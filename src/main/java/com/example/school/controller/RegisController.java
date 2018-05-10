@@ -51,7 +51,8 @@ public class RegisController {
 
     @PostMapping(value = "/regist")
     public String postRegisterUser(@RequestParam Map<String, String> map){
-        Role role = roleService.findByName(map.get("role"));
+        String rolename = "ROLE_" + map.get("role").toUpperCase();
+        Role role = roleService.findByName(rolename);
 
         User user = new User();
         user.setUsername(map.get("username"));
@@ -80,11 +81,7 @@ public class RegisController {
 
     @GetMapping(value = "/validatePage/{validCode}")
     public String valid(@PathVariable String validCode){
-        System.out.println(validCode);
-
         User user = userService.findByVaridateCode(validCode);
-        System.out.println(user);
-
         user.setActive(true);
         userService.save(user);
 

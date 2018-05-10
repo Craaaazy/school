@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('#admintable').dataTable({
 
         ajax: {
-            url: '/bookRemaind',
+            url: '/admin/bookRemaind',
             type: 'GET',
             dataType: 'json',
             dataSrc: '',
@@ -25,7 +25,7 @@ $(document).ready(function () {
                 data: 'bookname',
             }, {
                 targets: 3,
-                data: 'LendedDate',
+                data: 'lendedDate',
             },{
                 targets: 4,
                 searching: false,
@@ -43,7 +43,7 @@ function sendmail(_this) {
     var name = $(_this).parent().siblings().eq(1).text();
 
     $.ajax({
-        url:'/bookRemaind/' + name,
+        url:'/admin/bookRemaind/' + name,
         type:'post',
 
         success:function (data) {
