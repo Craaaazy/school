@@ -43,8 +43,8 @@ function giveBack(_this) {
         url:'/lib/lend/' + name,
         type:'delete',
 
-        success:function () {
-            alert("book has been returned!");
+        success:function (data) {
+            alert(data);
             window.location.reload(true);
         }
     })

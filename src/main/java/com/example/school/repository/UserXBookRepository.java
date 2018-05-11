@@ -11,4 +11,5 @@ public interface UserXBookRepository extends JpaRepository<UserXBook, String>{
     UserXBook save(UserXBook userXBook);
     List<UserXBook> findByUser(User user);
     void deleteUserXBookByBook(Book book);
+    List<UserXBook> findByBook(Book book);
 }

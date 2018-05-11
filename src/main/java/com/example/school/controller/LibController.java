@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/lib")
@@ -73,7 +72,8 @@ public class LibController {
         List<UserXBook> list = userXBookService.findAll();
 
         List<LendedBook> list1 = new ArrayList<>();
-        for (UserXBook aList : list) {
+        for (int i = 0; i < list.size(); i++) {
+            UserXBook aList = list.get(i);
             if (aList.getUser().getUsername() == user.getUsername()) {
                 LendedBook lendedBook = new LendedBook(aList.getBook().getName(), aList.getLendedDate());
                 list1.add(lendedBook);
@@ -83,14 +83,41 @@ public class LibController {
         return list1;
     }
 
-    @DeleteMapping("/lend/{name}")
+    @DeleteMapping("/lend/{name}")          //还书
     @ResponseBody
-    public void ReturnBook(@PathVariable String name){
+    public String ReturnBook(@PathVariable String name, Principal principal){
+        int days = -1;
         Book book = bookService.findByName(name);
         book.setNum(book.getNum() + 1);
+        List<UserXBook> list = userXBookService.findByBook(book);
+
+        User user = userService.findByUsername(principal.getName());
+
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getUser() == user){
+
+                Calendar lendedDate = Calendar.getInstance();
+                lendedDate.setTime((list.get(i).getLendedDate()));
+                Date nowDate = new Date(System.currentTimeMillis());
+                Calendar now = Calendar.getInstance();
+                now.setTime(nowDate);
+
+                Long lendDays = now.getTime().getTime() - lendedDate.getTime().getTime();
+                days = (int) (lendDays/1000/60/60/24);
+            }
+        }
+
         userXBookService.deleteUserXBookByBook(book);
         bookService.save(book);
+
+        if(days >= 60){
+            return "you've over " + (days-60) + " days";
+        }else {
+            return "you've lended this book for " + days + "days";
+        }
+
     }
+
 
 
 }

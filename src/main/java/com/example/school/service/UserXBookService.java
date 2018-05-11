@@ -12,4 +12,5 @@ public interface UserXBookService {
     List<UserXBook> findByUser(User user);
     List<UserXBook> findAll();
     void deleteUserXBookByBook(Book book);
+    List<UserXBook> findByBook(Book book);
 }

@@ -40,5 +40,10 @@ public class UserXBookServiceImpl implements UserXBookService {
         userXBookRepository.deleteUserXBookByBook(book);
     }
 
+    @Override
+    public List<UserXBook> findByBook(Book book) {
+        return userXBookRepository.findByBook(book);
+    }
+
 
 }
