@@ -1,5 +1,7 @@
 package com.example.school.controller;
 
+import com.example.school.dto.EmailDto;
+import com.example.school.event.OnEmailEvent;
 import com.example.school.model.Role;
 import com.example.school.model.User;
 import com.example.school.service.RoleService;
@@ -7,7 +9,7 @@ import com.example.school.service.UserService;
 import com.example.school.util.ValidateCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,8 @@ public class RegisController {
     RoleService roleService;
     @Autowired
     UserService userService;
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
     @Autowired
     private JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
@@ -51,6 +55,11 @@ public class RegisController {
 
     @PostMapping(value = "/regist")
     public String postRegisterUser(@RequestParam Map<String, String> map){
+
+        String subject = "完成邮箱验证";
+        String validCode = new ValidateCodeUtil().getValidCode();
+        String content = "点击下面链接激活账号: http://localhost:8077/validatePage/" + validCode;;
+
         String rolename = "ROLE_" + map.get("role").toUpperCase();
         Role role = roleService.findByName(rolename);
 
@@ -60,19 +69,26 @@ public class RegisController {
         user.setEmail(map.get("email"));
         user.setRole(role);
 
-        String validCode = new ValidateCodeUtil().getValidCode();
+        EmailDto emailDto = new EmailDto();
+        emailDto.setTo(map.get("email"));
+        emailDto.setSubject(subject);
+        emailDto.setMessage(content);
+        emailDto.setFrom(usermailname);
+
+        eventPublisher.publishEvent(new OnEmailEvent(emailDto));
+
         user.setVaridateCode(validCode);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(usermailname);
-        message.setTo(map.get("email"));
-        message.setSubject("完成邮箱验证");
-        String content = "点击下面链接激活账号:" +
-                "http://localhost:8077/validatePage/" + validCode;
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setFrom(usermailname);
+//        message.setTo(map.get("email"));
+//        message.setSubject("完成邮箱验证");
+//        String content = "点击下面链接激活账号:" +
+//                "http://localhost:8077/validatePage/" + validCode;
 
-        message.setText(content);
+//        message.setText(content);
 
-        javaMailSender.send(message);
+//        javaMailSender.send(message);
         userService.save(user);
 
         return "unvalidate";
