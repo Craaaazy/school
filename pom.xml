@@ -86,7 +86,8 @@
             <version>1.16.18</version>
         </dependency>
 
-    </dependencies>
+
+	</dependencies>
 
 	<build>
 		<plugins>

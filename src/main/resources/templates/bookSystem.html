@@ -29,10 +29,16 @@
 </head>
 <body>
 
+<div th:replace="fragments/header :: default"></div>
+
 <center>
-    <form method="get" th:action="@{/lib/myBook}">
-        <button type="submit" class="btn btn-primary">myBook</button>
-    </form>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">BookSystem</li>
+        </ol>
+    </nav>
 
     <div class="container">
         <table id="myTable" class="display">

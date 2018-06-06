@@ -28,12 +28,16 @@
 </head>
 <body>
 
+<div th:replace="fragments/header :: default"></div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">myBook</li>
+    </ol>
+</nav>
+
 <div class="container">
-    <center>
-        <form method="get" th:action="@{/lib/index}">
-            <button type="submit" class="btn btn-primary">index</button>
-        </form>
-    </center>
 
     <table id="myBook" class="display">
         <thead>

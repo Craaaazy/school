@@ -2,6 +2,8 @@ package com.example.school.controller;
 
 
 import com.example.school.dto.BookManage;
+import com.example.school.dto.EmailDto;
+import com.example.school.event.OnEmailEvent;
 import com.example.school.model.User;
 import com.example.school.model.UserXBook;
 import com.example.school.service.BookService;
@@ -10,8 +12,7 @@ import com.example.school.service.UserService;
 import com.example.school.service.UserXBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,16 +32,17 @@ public class AdminController {
     BookService bookService;
     @Autowired
     RoleService roleService;
-
     @Autowired
-    private JavaMailSender javaMailSender;
+    ApplicationEventPublisher eventPublisher;
+
+
     @Value("${spring.mail.username}")
     private String usermailname;
 
 
     @GetMapping("/index")
     public String adminIndex(Principal principal){
-        return "adminPage";
+        return "admin/adminPage";
     }
 
     @GetMapping("/bookRemaind")
@@ -64,20 +66,19 @@ public class AdminController {
     @ResponseBody
     public String remind(@PathVariable String username){
         User user = userService.findByUsername(username);
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(usermailname);
-        message.setTo(user.getEmail());
-        message.setSubject("尽快还书!");
+        String subject = "尽快还书!";
         String content = "请尽快还书。";
 
-        message.setText(content);
+        EmailDto email = new EmailDto();
+        email.setFrom(usermailname);
+        email.setTo(user.getEmail());
+        email.setSubject(subject);
+        email.setMessage(content);
 
-        javaMailSender.send(message);
+        eventPublisher.publishEvent(new OnEmailEvent(email));
 
         return "发送成功";
+
     }
-
-
 
 }

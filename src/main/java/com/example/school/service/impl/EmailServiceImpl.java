@@ -25,4 +25,5 @@ public class EmailServiceImpl implements IEmailService {
         javaMailSender.send(message);
 
     }
+
 }

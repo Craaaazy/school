@@ -11,7 +11,36 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
 </head>
-<div class="container">
+<body>
+
+<!--<script th:inline="javascript">-->
+    <!--var book = /*[[${books}]]*/; //这样居然可以读到东西！！！-->
+    <!--console.log(book);-->
+<!--</script>-->
+
+<div th:replace="fragments/header :: default"></div>
+<!--<div>-->
+
+<!--&lt;!&ndash;<table>&ndash;&gt;-->
+    <!--&lt;!&ndash;<thead>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+        <!--&lt;!&ndash;<th>name</th>&ndash;&gt;-->
+        <!--&lt;!&ndash;<th>author</th>&ndash;&gt;-->
+        <!--&lt;!&ndash;<th>num</th>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;</thead>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;<tr th:each="book : ${books}">&ndash;&gt;-->
+    <!--&lt;!&ndash;<td th:text="${book.name}"></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td th:text="${book.author}"></td>&ndash;&gt;-->
+    <!--&lt;!&ndash;<td th:text="(${book.num} > 15)? ${book.num} : 'null'"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;</tr>&ndash;&gt;-->
+    <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;</table>&ndash;&gt;-->
+
+<!--</div>-->
+
+<center class="container mt-2">
     <div class="starter-template">
         <p th:if="${param.logout}" style="width: 400px" class="bg-warning">已注销</p>
         <p th:if="${param.error}" style="width: 400px" class="bg-danger">有错误，请重试</p>
@@ -28,5 +57,6 @@
             <input type="submit" id="login" value="Login" class="btn btn-primary"/>
         </form>
     </div>
-</div>
+</center>
+</body>
 </html>

@@ -19,17 +19,13 @@
 
 </head>
 <body>
-<form th:action="@{/logout}">
-    <button type="submit" class="btn btn-danger">logout</button>
-</form>
 
-<form method="get" th:action="@{/lib/index}">
-    <button type="submit" class="btn btn-primary">to book index.</button>
-</form>
+<div th:replace="fragments/header :: default"></div>
 
-<form method="get" th:action="@{/admin/index}">
-    <button type="submit" class="btn btn-primary">to admin page.</button>
-</form>
+<h3 style="height: 300px;">
+    welcome school system [[${#httpServletRequest.remoteUser}]].
+</h3>
 
+<div th:replace="fragments/footer :: default"></div>
 </body>
 </html>
