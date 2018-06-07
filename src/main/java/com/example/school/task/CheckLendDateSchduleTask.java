@@ -31,8 +31,8 @@ public class CheckLendDateSchduleTask{
     private String usermailname;
 
 
-    @Scheduled(cron = "* */1 * * * *")
-    public void checkDate(){
+    @Scheduled(cron = "0 0 0/1 * * ?")
+    public void checkDate(){  //不能带参数
 
         LOGGER.info("checking all lend date...");
         List<UserXBook> userXBooks = userXBookService.findAll();

@@ -45,6 +45,11 @@ public class AdminController {
         return "admin/adminPage";
     }
 
+    @GetMapping("/userprofile")
+    public String userprofile(){
+        return "userprofile";
+    }
+
     @GetMapping("/bookRemaind")
     @ResponseBody
     public List<BookManage> getUserBooks(){
