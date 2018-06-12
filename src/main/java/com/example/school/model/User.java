@@ -23,6 +23,15 @@ public class User {
     private Boolean active;
     private String varidateCode;
 
+    public String getHead_icon() {
+        return head_icon;
+    }
+
+    public void setHead_icon(String head_icon) {
+        this.head_icon = head_icon;
+    }
+
+    private String head_icon;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

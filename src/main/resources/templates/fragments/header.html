@@ -37,9 +37,6 @@
                     <a class="nav-link" th:href="@{/admin/index}">Manage</a>
                 </li>
 
-                <li class="nav-item">
-                    <img class="nav-link" src="https://s.gravatar.com/avatar/ab5b1d56d0c288116c03c79d4117cb36?s=40" />
-                </li>
             </ul>
 
             <!--<p th:text="${#dates.createNow()}"></p>-->
@@ -48,6 +45,9 @@
         </div>
 
         <div >
+
+
+
             <form class="form-inline my-2 my-lg-0" th:action="@{/logout}">
                 <button type="submit" class="btn btn-outline-success my-2 my-sm-0">logout</button>
             </form>

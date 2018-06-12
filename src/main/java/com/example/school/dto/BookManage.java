@@ -2,7 +2,6 @@ package com.example.school.dto;
 
 import java.sql.Date;
 
-
 public class BookManage {
 
     private String username;

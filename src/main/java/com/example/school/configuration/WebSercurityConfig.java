@@ -45,7 +45,7 @@ public class WebSercurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/admin/**").hasRole("ADMIN")//这个role 必须大写数据库role里面要写ROLE_ADMIN
                     .antMatchers("/regist","/unvalidate","/validatePage/*","/validatePage","/validateSuccess").permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().authenticated()//上面两个顺序不能反
                 .and()
                     .formLogin()
                     .loginPage("/login")//默认login
