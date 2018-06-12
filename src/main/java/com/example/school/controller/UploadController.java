@@ -1,6 +1,7 @@
 package com.example.school.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,12 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
 
 @Controller
 public class UploadController {
-
-    @Value("${filepath}")
-    private String filepath;
 
     @RequestMapping("/upload")
     @ResponseBody
@@ -24,9 +23,12 @@ public class UploadController {
 
         if (!file.isEmpty()) {
             String saveFileName = file.getOriginalFilename();
-            File saveFile = new File(filepath + saveFileName);
+            File saveFile = new File("C:\\Users\\Ning\\Documents\\Temp\\" + saveFileName);
 
+            Cloudinary cloudinary = new Cloudinary();
+            Map uploadResult = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
 
+            System.out.println(uploadResult);
 
             FileOutputStream out = new FileOutputStream(saveFile);
             out.write(file.getBytes());
